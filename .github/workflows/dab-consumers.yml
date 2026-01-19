@@ -97,6 +97,7 @@ jobs:
           repository: ansible-automation-platform/aap-eda-controller
           ref: stable-1.1
           path: eda-server
+          token: ${{ secrets.ALANCODING_DOWNSTREAM_CHECKS_AAP_ORG_TOKEN }}
 
       - uses: actions/setup-python@v5
         with:
