@@ -103,6 +103,11 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install system dependencies for DAB
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxmlsec1-dev libxmlsec1-openssl pkg-config libldap2-dev libsasl2-dev
+
       - name: Run eda-server tests
         run: |
           DAB_PATH="$PWD"
