@@ -112,7 +112,7 @@ jobs:
           pipx install poetry
 
           # Install local DAB first
-          poetry run pip install -e "$DAB_PATH"
+          poetry run pip install -e "$DAB_PATH[all]"
 
           # Remove django-ansible-base from poetry.lock to prevent poetry from reinstalling it
           poetry remove django-ansible-base --lock || true
