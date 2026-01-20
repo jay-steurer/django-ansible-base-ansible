@@ -108,8 +108,17 @@ jobs:
           DAB_PATH="$PWD"
           mv eda-server /tmp
           cd /tmp/eda-server
+
           pipx install poetry
+
+          # Install local DAB first
           poetry run pip install -e "$DAB_PATH"
+
+          # Remove django-ansible-base from poetry.lock to prevent poetry from reinstalling it
+          poetry remove django-ansible-base --lock || true
+
+          # Install remaining dependencies
           poetry install -E all --only main,test
+
           poetry run pip show django-ansible-base
           poetry run pytest
