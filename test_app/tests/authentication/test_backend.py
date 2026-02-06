@@ -195,11 +195,10 @@ def test_last_login_from_with_attribute(local_authenticator, random_user, expect
         ):
             # Expected log message when user logs in
             with mock.patch(
-                'ansible_base.authentication.backend.logger.log',
+                'ansible_base.authentication.backend.log_auth_event',
             ) as log_mock:
                 auth_return = backend.AnsibleBaseAuth().authenticate(None)
                 log_mock.assert_called_once_with(
-                    logging.INFO,
                     f'User {random_user.username} logged in from {mock_authenticator_plugin.type} authenticator with ID "{local_authenticator.id}"',
                 )
 
@@ -233,11 +232,10 @@ def test_last_login_from_without_attribute(local_authenticator, random_user, exp
             return_value={local_authenticator.id: mock_authenticator_plugin},
         ):
             with mock.patch(
-                'ansible_base.authentication.backend.logger.log',
+                'ansible_base.authentication.backend.log_auth_event',
             ) as log_mock:
                 auth_return = backend.AnsibleBaseAuth().authenticate(None)
                 log_mock.assert_called_once_with(
-                    logging.INFO,
                     f'User {random_user.username} logged in from {mock_authenticator_plugin.type} authenticator with ID "{local_authenticator.id}"',
                 )
 
@@ -272,11 +270,11 @@ def test_last_login_from_multiple_authenticators(local_authenticator, github_ent
         ):
             # Expected log message when user logs in
             with mock.patch(
-                'ansible_base.authentication.backend.logger.log',
+                'ansible_base.authentication.backend.log_auth_event',
             ) as log_mock:
                 auth_return = backend.AnsibleBaseAuth().authenticate(None)
                 log_mock.assert_called_once_with(
-                    logging.INFO, f'User {random_user.username} logged in from {mock_local_plugin.type} authenticator with ID "{local_authenticator.id}"'
+                    f'User {random_user.username} logged in from {mock_local_plugin.type} authenticator with ID "{local_authenticator.id}"'
                 )
 
             # Verify the user is returned
